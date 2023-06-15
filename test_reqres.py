@@ -24,8 +24,8 @@ def test_single_user():
     response = requests.get('https://reqres.in/api/users/2')
 
     assert response.status_code == 200
-    assert response.json()['first_name'] == first_name
-    assert response.json()['last_name'] == last_name
+    assert response.json()['data']['first_name'] == first_name
+    assert response.json()['data']['last_name'] == last_name
 
 
 def test_single_user_not_found():
@@ -102,14 +102,14 @@ def test_login_unsuccessful():
 
 
 def test_put_user():
-    name = 'morpheus',
-    job = 'zion resident'
+    name = "morpheus"
+    job = "zion resident"
 
     response = requests.put(
         url='https://reqres.in/api/users/2',
         json={
-            'name': name,
-            'job': job
+            "name": name,
+            "job": job
         }
     )
 
