@@ -146,8 +146,8 @@ def test_put_user():
 def test_delete_user_returns_204():
     # schema = load_json_schema('get_delete_user_returns.json')
 
-    response = reqres_session.get('/api/users/2')
+    response = reqres_session.delete('/api/users/2')
     print(response.text)
     # validate(instance=response.json(), schema=schema)
-    assert response.status_code == 200
+    assert response.status_code == 204
     assert response.text == ''
