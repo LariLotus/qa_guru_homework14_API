@@ -1,7 +1,5 @@
-import requests
-import schema as schema
-from jsonschema.validators import validate
 
+from jsonschema.validators import validate
 from helper import load_json_schema, CustomSession, reqres_session
 
 
@@ -54,8 +52,8 @@ def test_create_user():
     job = "job"
     schema = load_json_schema('post_create_user.json')
 
-    response = requests.post(
-        url='https://reqres.in/api/users',
+    response = reqres_session.post(
+        '/api/users',
         json={
             "name": name,
             "job": job}
@@ -71,8 +69,8 @@ def test_post_register_successful():
     password = "pistol"
     schema = load_json_schema('post_register_successful.json')
 
-    response = requests.post(
-        url='https://reqres.in/api/register',
+    response = reqres_session.post(
+        '/api/register',
         json={
             'email': email,
             'password': password}
@@ -86,8 +84,8 @@ def test_post_register_unsuccessful():
     email = "sydney@fife"
     schema = load_json_schema('post_register_unsuccessful.json')
 
-    response = requests.post(
-        url='https://reqres.in/api/register',
+    response = reqres_session.post(
+        '/api/register',
         json={'email': email}
     )
 
@@ -101,8 +99,8 @@ def test_login_successful():
     password = 'cityslicka'
     schema = load_json_schema('post_login_successful.json')
 
-    response = requests.post(
-        url='https://reqres.in/api/login',
+    response = reqres_session.post(
+        '/api/login',
         json={'email': email,
               'password': password}
     )
@@ -115,8 +113,8 @@ def test_login_unsuccessful():
     email = 'peter@klaven'
     schema = load_json_schema('post_login_unsuccessful.json')
 
-    response = requests.post(
-        url='https://reqres.in/api/login',
+    response = reqres_session.post(
+        '/api/login',
         json={'email': email}
     )
     validate(instance=response.json(), schema=schema)
@@ -129,8 +127,8 @@ def test_put_user():
     job = "zion resident"
     schema = load_json_schema('put_user.json')
 
-    response = requests.put(
-        url='https://reqres.in/api/users/2',
+    response = reqres_session.put(
+        '/api/users/2',
         json={
             "name": name,
             "job": job
@@ -144,10 +142,9 @@ def test_put_user():
 
 
 def test_delete_user_returns_204():
-    # schema = load_json_schema('get_delete_user_returns.json')
 
     response = reqres_session.delete('/api/users/2')
     print(response.text)
-    # validate(instance=response.json(), schema=schema)
+
     assert response.status_code == 204
     assert response.text == ''
